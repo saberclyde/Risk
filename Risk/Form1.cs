@@ -366,7 +366,7 @@ namespace Risk
                     {
                         if (c.Troops == 1)
                         {
-                            MessageBox.Show("You must have more than one troop in a territory to use it to attack",
+                            MessageBox.Show("You must have more than one troop in a territory to use it to attack.",
                                 "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
@@ -408,14 +408,24 @@ namespace Risk
                     {
                         if (lastMove.AdjacentTerritories.Contains(c))
                         {
+                            move = Convert.ToInt16(moveBox.Value);
+                            moveBox.Enabled = false;
                             lastMove.Troops = lastMove.Troops - move;
                             c.Troops = c.Troops + move;
+                            hover(sender, e);
+                            updateTroopCount(sender as TerritoryLabel);
+                            updateTroopCount(mapBox.Controls[$"b{lastMove.RefName}"] as TerritoryLabel);
                             lastMove = c;
                         }
                     }
                     else
                     {
-                        if (c.Troops < 3) return;
+                        if (c.Troops == 1)
+                        {
+                            MessageBox.Show("You must have more than one troop in a territory transfer troops from it.",
+                                "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
                         moveBox.Maximum = c.Troops - 1;
                         moveBox.Minimum = 1;
                         moveBox.Enabled = true;
@@ -545,22 +555,19 @@ namespace Risk
             else if (game.TurnPart == "Attack")
             {
                 game.TurnPart = "Move";
-                moveBox.Enabled = true;
+                attacker = null;
+                defender = null;
+                updateTSelect();
                 disableDice();
             }
             else if (game.TurnPart == "Move")
             {
-                if (moving)
-                {
-                    move = Convert.ToInt16(moveBox.Value);
-                    moveBox.Enabled = false;
-                }
-                else
-                {
-                    game.AdvanceTurn(map);
-                    moveBox.Enabled = false;
-                    endButton.Enabled = false;
-                }
+                game.AdvanceTurn(map);
+                updateTurnText();
+                changeInfoText();
+                updatePlayerText();
+                moveBox.Enabled = false;
+                endButton.Enabled = false;
             }
         }
 
