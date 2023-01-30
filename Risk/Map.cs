@@ -369,7 +369,7 @@ namespace Risk
             // AFRICA
             algeria.AdjacentTerritories = new List<Territory> { brazil, iberia, rome, egypt, ethiopia, congo };
             egypt.AdjacentTerritories = new List<Territory> { rome, middleeast, ethiopia, algeria };
-            ethiopia.AdjacentTerritories = new List<Territory> { egypt, middleeast, madagascar, congo, algeria };
+            ethiopia.AdjacentTerritories = new List<Territory> { egypt, middleeast, madagascar, congo, algeria, southafrica };
             congo.AdjacentTerritories = new List<Territory> { algeria, ethiopia, southafrica };
             southafrica.AdjacentTerritories = new List<Territory> { madagascar, ethiopia, congo };
             madagascar.AdjacentTerritories = new List<Territory> { southafrica, ethiopia };

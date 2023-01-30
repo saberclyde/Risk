@@ -96,6 +96,7 @@ namespace Risk
             this.bPrussia = new Risk.TerritoryLabel();
             this.bRussia = new Risk.TerritoryLabel();
             this.bScandinavia = new Risk.TerritoryLabel();
+            this.fiveplayerb = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.board)).BeginInit();
             this.mapBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Jim)).BeginInit();
@@ -153,7 +154,7 @@ namespace Risk
             this.threeplayerb.TabIndex = 50;
             this.threeplayerb.Text = "3 Players";
             this.threeplayerb.UseVisualStyleBackColor = true;
-            this.threeplayerb.Visible = false;
+            this.threeplayerb.Click += new System.EventHandler(this.threeplayerb_Click);
             // 
             // fourplayerb
             // 
@@ -163,7 +164,7 @@ namespace Risk
             this.fourplayerb.TabIndex = 51;
             this.fourplayerb.Text = "4 Players";
             this.fourplayerb.UseVisualStyleBackColor = true;
-            this.fourplayerb.Visible = false;
+            this.fourplayerb.Click += new System.EventHandler(this.fourplayerb_Click);
             // 
             // turnText
             // 
@@ -404,7 +405,6 @@ namespace Risk
             this.selectedT.Name = "selectedT";
             this.selectedT.Size = new System.Drawing.Size(220, 15);
             this.selectedT.TabIndex = 70;
-            this.selectedT.Text = "Selected: ??? to ???";
             this.selectedT.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // diceText
@@ -1157,12 +1157,23 @@ namespace Risk
             this.bScandinavia.DoubleClick += new System.EventHandler(this.territoryDoubleClick);
             this.bScandinavia.MouseEnter += new System.EventHandler(this.hover);
             // 
+            // fiveplayerb
+            // 
+            this.fiveplayerb.Location = new System.Drawing.Point(248, 12);
+            this.fiveplayerb.Name = "fiveplayerb";
+            this.fiveplayerb.Size = new System.Drawing.Size(75, 23);
+            this.fiveplayerb.TabIndex = 72;
+            this.fiveplayerb.Text = "5 Players";
+            this.fiveplayerb.UseVisualStyleBackColor = true;
+            this.fiveplayerb.Click += new System.EventHandler(this.fiveplayerb_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(940, 486);
+            this.Controls.Add(this.fiveplayerb);
             this.Controls.Add(this.diceText);
             this.Controls.Add(this.selectedT);
             this.Controls.Add(this.turnHelpButton);
@@ -1265,6 +1276,7 @@ namespace Risk
         private System.Windows.Forms.Label selectedT;
         private System.Windows.Forms.Label diceText;
         private System.Windows.Forms.PictureBox Jim;
+        private System.Windows.Forms.Button fiveplayerb;
     }
 }
 

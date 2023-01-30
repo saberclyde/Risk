@@ -63,6 +63,9 @@ namespace Risk
         private void show()
         {
             twoplayerb.Visible = false;
+            threeplayerb.Visible = false;
+            fourplayerb.Visible = false;
+            fiveplayerb.Visible = false;
             HoverText.Visible = true;
             bonusText.Visible = true;
             turnText.Visible = true;
@@ -81,7 +84,6 @@ namespace Risk
             endButton.Visible = true;
             turnHelpButton.Visible = true;
             selectedT.Visible = true;
-            diceText.Visible = true;
         }
 
         private void hover(object sender, EventArgs e)
@@ -108,47 +110,6 @@ namespace Risk
             {
                 playersBox.Controls[$"{i.Name.Replace(" ", "")}Label"].Text = $"{i.Name} : {i.CardsCount} Cards : {i.TroopsPerTurn} Troops per turn";
             }
-        }
-
-        private void twoplayerb_Click(object sender, EventArgs e)
-        {
-            game.SetUp(2, map);
-            updateTurnText();
-            show();
-            foreach (Player i in game.Players)
-            {
-                Label label = new Label();
-                label.Name = $"{i.Name.Replace(" ", "")}Label";
-                label.ForeColor = i.Colour;
-                label.Text = $"{i.Name} : {i.CardsCount} Cards : {i.TroopsPerTurn} Troops per turn";
-                label.MaximumSize = new Size(0, 13);
-                label.AutoSize = true;
-                playersBox.Controls.Add(label);
-            }
-            changeInfoText();
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Turn);
-            game.GiveCard(game.Players[1]);
-            game.GiveCard(game.Players[1]);
         }
 
         private void cardsHelpButton_Click(object sender, EventArgs e)
@@ -216,16 +177,23 @@ namespace Risk
 
         private void updateTSelect()
         {
-            if (attacker == null)
+            if (game.TurnPart != "Attack") diceText.Visible = false;
+            else diceText.Visible = true;
+            if (game.State == "Main" && game.TurnPart == "Attack")
             {
-                if (defender == null) selectedT.Text = "Selected: ??? to ???";
-                else selectedT.Text = "Selected: ??? to " + defender.Name;
+                if (attacker == null)
+                {
+                    if (defender == null) selectedT.Text = "Selected: ??? to ???";
+                    else selectedT.Text = "Selected: ??? to " + defender.Name;
+                }
+                else
+                {
+                    if (defender == null) selectedT.Text = "Selected: " + attacker.Name + " to ???";
+                    else selectedT.Text = "Selected: " + attacker.Name + " to " + defender.Name;
+                }
             }
-            else
-            {
-                if (defender == null) selectedT.Text = "Selected: " + attacker.Name + " to ???";
-                else selectedT.Text = "Selected: " + attacker.Name + " to " + defender.Name;
-            }
+            else if (game.State == "Main" && game.TurnPart == "Fortify") selectedT.Text = "Fortify territories";
+            else if (game.State == "Main" && game.TurnPart == "Move") selectedT.Text = "Transfer troops";
         }
 
         private void updateDiceText()
@@ -340,6 +308,7 @@ namespace Risk
                 updateTroopCount(((TerritoryLabel)sender));
                 game.Turn.TroopCount--;
                 game.AdvanceTurn(map);
+                updateTSelect();
                 updateTurnText();
                 changeInfoText();
                 updatePlayerText();
@@ -356,6 +325,7 @@ namespace Risk
                     if (game.Turn.TroopCount == 0)
                     {
                         game.AdvanceTurnPart();
+                        updateTSelect();
                         foreach (CardButton i in cardsList.Controls) i.Enabled = false;
                         endButton.Enabled = true;
                     }
@@ -562,18 +532,63 @@ namespace Risk
             }
             else if (game.TurnPart == "Move")
             {
+                if (getsCard == true) game.GiveCard(game.Turn);
                 game.AdvanceTurn(map);
+                updateTSelect();
                 updateTurnText();
                 changeInfoText();
                 updatePlayerText();
+                updateCards();
                 moveBox.Enabled = false;
                 endButton.Enabled = false;
+                moving = false;
             }
         }
 
         private void cockroach(object sender, EventArgs e)
         {
             Jim.BackgroundImage = Properties.Resources.American_Roach_Top_V;
+        }
+
+        private void playersButtonCommon()
+        {
+            updateTurnText();
+            show();
+            foreach (Player i in game.Players)
+            {
+                Label label = new Label();
+                label.Name = $"{i.Name.Replace(" ", "")}Label";
+                label.ForeColor = i.Colour;
+                label.Text = $"{i.Name} : {i.CardsCount} Cards : {i.TroopsPerTurn} Troops per turn";
+                label.MaximumSize = new Size(0, 13);
+                label.AutoSize = true;
+                playersBox.Controls.Add(label);
+            }
+            changeInfoText();
+        }
+        
+        private void twoplayerb_Click(object sender, EventArgs e)
+        {
+            game.SetUp(2, map);
+            playersButtonCommon();
+        }
+
+        private void threeplayerb_Click(object sender, EventArgs e)
+        {
+            game.SetUp(3, map);
+            playersButtonCommon();
+        }
+
+        private void fourplayerb_Click(object sender, EventArgs e)
+        {
+            game.SetUp(4, map);
+            playersButtonCommon();
+        }
+
+        private void fiveplayerb_Click(object sender, EventArgs e)
+        {
+            game.SetUp(5, map);
+            playersButtonCommon();
         }
     }
 }
