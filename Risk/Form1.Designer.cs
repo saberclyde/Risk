@@ -29,8 +29,6 @@ namespace Risk
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.board = new System.Windows.Forms.PictureBox();
             this.HoverText = new System.Windows.Forms.Label();
             this.twoplayerb = new System.Windows.Forms.Button();
             this.bonusText = new System.Windows.Forms.Label();
@@ -41,8 +39,6 @@ namespace Risk
             this.cardsHelpButton = new System.Windows.Forms.Button();
             this.cardsList = new System.Windows.Forms.FlowLayoutPanel();
             this.playersBox = new System.Windows.Forms.FlowLayoutPanel();
-            this.mapBox = new System.Windows.Forms.GroupBox();
-            this.Jim = new System.Windows.Forms.PictureBox();
             this.selectedLabel = new System.Windows.Forms.Label();
             this.attackOne = new System.Windows.Forms.Button();
             this.attackTwo = new System.Windows.Forms.Button();
@@ -54,6 +50,8 @@ namespace Risk
             this.turnHelpButton = new System.Windows.Forms.Button();
             this.selectedT = new System.Windows.Forms.Label();
             this.diceText = new System.Windows.Forms.Label();
+            this.fiveplayerb = new System.Windows.Forms.Button();
+            this.mapBox = new System.Windows.Forms.GroupBox();
             this.bAlberta = new Risk.TerritoryLabel();
             this.bCalifornia = new Risk.TerritoryLabel();
             this.bMexico = new Risk.TerritoryLabel();
@@ -96,21 +94,9 @@ namespace Risk
             this.bPrussia = new Risk.TerritoryLabel();
             this.bRussia = new Risk.TerritoryLabel();
             this.bScandinavia = new Risk.TerritoryLabel();
-            this.fiveplayerb = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.board)).BeginInit();
-            this.mapBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Jim)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.moveBox)).BeginInit();
+            this.mapBox.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // board
-            // 
-            this.board.Image = ((System.Drawing.Image)(resources.GetObject("board.Image")));
-            this.board.Location = new System.Drawing.Point(0, 0);
-            this.board.Name = "board";
-            this.board.Size = new System.Drawing.Size(720, 405);
-            this.board.TabIndex = 0;
-            this.board.TabStop = false;
             // 
             // HoverText
             // 
@@ -219,69 +205,6 @@ namespace Risk
             this.playersBox.Name = "playersBox";
             this.playersBox.Size = new System.Drawing.Size(258, 81);
             this.playersBox.TabIndex = 58;
-            // 
-            // mapBox
-            // 
-            this.mapBox.Controls.Add(this.Jim);
-            this.mapBox.Controls.Add(this.bAlberta);
-            this.mapBox.Controls.Add(this.bCalifornia);
-            this.mapBox.Controls.Add(this.bMexico);
-            this.mapBox.Controls.Add(this.bFlorida);
-            this.mapBox.Controls.Add(this.bOntario);
-            this.mapBox.Controls.Add(this.bQuebec);
-            this.mapBox.Controls.Add(this.bGreenland);
-            this.mapBox.Controls.Add(this.bAlaska);
-            this.mapBox.Controls.Add(this.bPerth);
-            this.mapBox.Controls.Add(this.bNunavut);
-            this.mapBox.Controls.Add(this.bSydney);
-            this.mapBox.Controls.Add(this.bVenezuela);
-            this.mapBox.Controls.Add(this.bNewGuinea);
-            this.mapBox.Controls.Add(this.bBrazil);
-            this.mapBox.Controls.Add(this.bIndonesia);
-            this.mapBox.Controls.Add(this.bPeru);
-            this.mapBox.Controls.Add(this.bJapan);
-            this.mapBox.Controls.Add(this.bArgentina);
-            this.mapBox.Controls.Add(this.bKamchatka);
-            this.mapBox.Controls.Add(this.bAlgeria);
-            this.mapBox.Controls.Add(this.bYakutsk);
-            this.mapBox.Controls.Add(this.bSouthAfrica);
-            this.mapBox.Controls.Add(this.bIrkutsk);
-            this.mapBox.Controls.Add(this.bCongo);
-            this.mapBox.Controls.Add(this.bSiberia);
-            this.mapBox.Controls.Add(this.bEgypt);
-            this.mapBox.Controls.Add(this.bUral);
-            this.mapBox.Controls.Add(this.bEthiopia);
-            this.mapBox.Controls.Add(this.bMongolia);
-            this.mapBox.Controls.Add(this.bMadagascar);
-            this.mapBox.Controls.Add(this.bSiam);
-            this.mapBox.Controls.Add(this.bBritain);
-            this.mapBox.Controls.Add(this.bChina);
-            this.mapBox.Controls.Add(this.bIceland);
-            this.mapBox.Controls.Add(this.bAfghanistan);
-            this.mapBox.Controls.Add(this.bIberia);
-            this.mapBox.Controls.Add(this.bIndia);
-            this.mapBox.Controls.Add(this.bRome);
-            this.mapBox.Controls.Add(this.bMiddleEast);
-            this.mapBox.Controls.Add(this.bPrussia);
-            this.mapBox.Controls.Add(this.bRussia);
-            this.mapBox.Controls.Add(this.bScandinavia);
-            this.mapBox.Controls.Add(this.board);
-            this.mapBox.Location = new System.Drawing.Point(0, 81);
-            this.mapBox.Name = "mapBox";
-            this.mapBox.Size = new System.Drawing.Size(720, 405);
-            this.mapBox.TabIndex = 59;
-            this.mapBox.TabStop = false;
-            this.mapBox.Text = "groupBox1";
-            // 
-            // Jim
-            // 
-            this.Jim.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Jim.Location = new System.Drawing.Point(11, 333);
-            this.Jim.Name = "Jim";
-            this.Jim.Size = new System.Drawing.Size(49, 66);
-            this.Jim.TabIndex = 72;
-            this.Jim.TabStop = false;
-            this.Jim.DoubleClick += new System.EventHandler(this.cockroach);
             // 
             // selectedLabel
             // 
@@ -419,6 +342,67 @@ namespace Risk
             this.diceText.TabIndex = 71;
             this.diceText.Text = "? Red Dice vs. ? Blue Dice";
             this.diceText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // fiveplayerb
+            // 
+            this.fiveplayerb.Location = new System.Drawing.Point(248, 12);
+            this.fiveplayerb.Name = "fiveplayerb";
+            this.fiveplayerb.Size = new System.Drawing.Size(75, 23);
+            this.fiveplayerb.TabIndex = 72;
+            this.fiveplayerb.Text = "5 Players";
+            this.fiveplayerb.UseVisualStyleBackColor = true;
+            this.fiveplayerb.Click += new System.EventHandler(this.fiveplayerb_Click);
+            // 
+            // mapBox
+            // 
+            this.mapBox.BackgroundImage = global::Risk.Properties.Resources.Risk_game_board;
+            this.mapBox.Controls.Add(this.bAlberta);
+            this.mapBox.Controls.Add(this.bCalifornia);
+            this.mapBox.Controls.Add(this.bMexico);
+            this.mapBox.Controls.Add(this.bFlorida);
+            this.mapBox.Controls.Add(this.bOntario);
+            this.mapBox.Controls.Add(this.bQuebec);
+            this.mapBox.Controls.Add(this.bGreenland);
+            this.mapBox.Controls.Add(this.bAlaska);
+            this.mapBox.Controls.Add(this.bPerth);
+            this.mapBox.Controls.Add(this.bNunavut);
+            this.mapBox.Controls.Add(this.bSydney);
+            this.mapBox.Controls.Add(this.bVenezuela);
+            this.mapBox.Controls.Add(this.bNewGuinea);
+            this.mapBox.Controls.Add(this.bBrazil);
+            this.mapBox.Controls.Add(this.bIndonesia);
+            this.mapBox.Controls.Add(this.bPeru);
+            this.mapBox.Controls.Add(this.bJapan);
+            this.mapBox.Controls.Add(this.bArgentina);
+            this.mapBox.Controls.Add(this.bKamchatka);
+            this.mapBox.Controls.Add(this.bAlgeria);
+            this.mapBox.Controls.Add(this.bYakutsk);
+            this.mapBox.Controls.Add(this.bSouthAfrica);
+            this.mapBox.Controls.Add(this.bIrkutsk);
+            this.mapBox.Controls.Add(this.bCongo);
+            this.mapBox.Controls.Add(this.bSiberia);
+            this.mapBox.Controls.Add(this.bEgypt);
+            this.mapBox.Controls.Add(this.bUral);
+            this.mapBox.Controls.Add(this.bEthiopia);
+            this.mapBox.Controls.Add(this.bMongolia);
+            this.mapBox.Controls.Add(this.bMadagascar);
+            this.mapBox.Controls.Add(this.bSiam);
+            this.mapBox.Controls.Add(this.bBritain);
+            this.mapBox.Controls.Add(this.bChina);
+            this.mapBox.Controls.Add(this.bIceland);
+            this.mapBox.Controls.Add(this.bAfghanistan);
+            this.mapBox.Controls.Add(this.bIberia);
+            this.mapBox.Controls.Add(this.bIndia);
+            this.mapBox.Controls.Add(this.bRome);
+            this.mapBox.Controls.Add(this.bMiddleEast);
+            this.mapBox.Controls.Add(this.bPrussia);
+            this.mapBox.Controls.Add(this.bRussia);
+            this.mapBox.Controls.Add(this.bScandinavia);
+            this.mapBox.Location = new System.Drawing.Point(0, 81);
+            this.mapBox.Name = "mapBox";
+            this.mapBox.Size = new System.Drawing.Size(720, 405);
+            this.mapBox.TabIndex = 59;
+            this.mapBox.TabStop = false;
             // 
             // bAlberta
             // 
@@ -1157,16 +1141,6 @@ namespace Risk
             this.bScandinavia.DoubleClick += new System.EventHandler(this.territoryDoubleClick);
             this.bScandinavia.MouseEnter += new System.EventHandler(this.hover);
             // 
-            // fiveplayerb
-            // 
-            this.fiveplayerb.Location = new System.Drawing.Point(248, 12);
-            this.fiveplayerb.Name = "fiveplayerb";
-            this.fiveplayerb.Size = new System.Drawing.Size(75, 23);
-            this.fiveplayerb.TabIndex = 72;
-            this.fiveplayerb.Text = "5 Players";
-            this.fiveplayerb.UseVisualStyleBackColor = true;
-            this.fiveplayerb.Click += new System.EventHandler(this.fiveplayerb_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1198,19 +1172,15 @@ namespace Risk
             this.Controls.Add(this.mapBox);
             this.Name = "Form1";
             this.Text = "Risk";
-            ((System.ComponentModel.ISupportInitialize)(this.board)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.moveBox)).EndInit();
             this.mapBox.ResumeLayout(false);
             this.mapBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Jim)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.moveBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox board;
         private System.Windows.Forms.Label HoverText;
         private System.Windows.Forms.Button twoplayerb;
         private System.Windows.Forms.Label bonusText;
@@ -1275,7 +1245,6 @@ namespace Risk
         private System.Windows.Forms.Button turnHelpButton;
         private System.Windows.Forms.Label selectedT;
         private System.Windows.Forms.Label diceText;
-        private System.Windows.Forms.PictureBox Jim;
         private System.Windows.Forms.Button fiveplayerb;
     }
 }

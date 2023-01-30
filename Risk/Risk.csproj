@@ -95,5 +95,8 @@
   <ItemGroup>
     <None Include="Resources\American Roach Top V.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Risk_game_board.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

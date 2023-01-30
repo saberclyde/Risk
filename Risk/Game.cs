@@ -91,7 +91,7 @@ namespace Risk
         private void CreatePlayers(int c)
         {
             List<Color> colours = new List<Color> 
-                {Color.Red, Color.BlueViolet, Color.LightSeaGreen, Color.DarkOrange, Color.Blue, Color.DeepPink};
+                {Color.Red, Color.BlueViolet, Color.LightSeaGreen, Color.DarkOrange, Color.Blue, Color.DeepPink, Color.ForestGreen};
             for (int i = 0; i < c; i++)
             {
                 Color co = colours[dice.Next(colours.Count)];
@@ -136,6 +136,21 @@ namespace Risk
             deck.Remove(c);
         }
 
+        public void ResetGame(Map m)
+        {
+            foreach (Territory i in m.Territories)
+            {
+                i.Troops = 0;
+                i.Owner = null;
+            }
+            cardbonusindex = 0;
+            cardbonus = cardincrement[0];
+            deck.Clear();
+            players.Clear();
+            turnPart = "Fortify";
+            state = "Claiming";
+        }
+
         public void AdvanceTurn(Map m)
         {
             turnPart = "Fortify";
@@ -174,6 +189,13 @@ namespace Risk
             {
                 turnPart = "Attack";
             }
+        }
+
+        public void EliminatePlayer(Player p)
+        {
+            foreach (Card i in p.Cards) turn.AddCard(i);
+            p.Cards.Clear();
+            players.Remove(p);
         }
     }
 }

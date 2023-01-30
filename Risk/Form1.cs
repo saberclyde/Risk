@@ -135,13 +135,19 @@ namespace Risk
         {
             Territory c = l.Territory;
             l.Text = c.Name + "\n" + c.Troops;
-            if (c.Troops == 0) l.ForeColor = game.Turn.Colour;
+            if (c.Owner == null) l.ForeColor = Color.Black;
+            else l.ForeColor = c.Owner.Colour;
         }
 
         private void updateTurnText()
         {
             turnText.Text = $"{game.Turn.Name}'s Turn ";
             turnText.ForeColor = game.Turn.Colour;
+        }
+
+        private void updateBonusText()
+        {
+            bonusText.Text = "Card Bonus - " + game.CardBonus;
         }
 
         private void updateCards()
@@ -241,41 +247,44 @@ namespace Risk
                 {
                     if (selected[2].Symbol == suit || selected[2].Wild == true)
                     {
-                        game.Turn.TroopCount = game.Turn.TroopCount + game.CardBonus;
-                        game.IncreaseBonus();
-                        changeInfoText();
-                        game.Turn.RemoveCard(selected[0]);
-                        game.Turn.RemoveCard(selected[1]);
-                        game.Turn.RemoveCard(selected[2]);
-                        selected.Clear();
-                        updateSelectText();
-                        updateCards();
-                        return;
+                        redeemCards();
                     }
                 }
                 // THREE DIFFERENT
-                if (threeOfAKind() == true)
+                else if (threeOfAKind() == true)
                 {
-                    game.Turn.TroopCount = game.Turn.TroopCount + game.CardBonus;
-                    game.IncreaseBonus();
-                    changeInfoText();
-                    game.Turn.RemoveCard(selected[0]);
-                    game.Turn.RemoveCard(selected[1]);
-                    game.Turn.RemoveCard(selected[2]);
-                    selected.Clear();
-                    updateSelectText();
-                    updateCards();
-                    return;
+                    redeemCards();
                 }
                 // ELSE
                 else
                 {
-
                     selected.Clear();
                     updateSelectText();
                     return;
                 }
             }
+        }
+
+        private void redeemCards()
+        {
+            game.Turn.TroopCount = game.Turn.TroopCount + game.CardBonus;
+            game.IncreaseBonus();
+            updateBonusText();
+            changeInfoText();
+            foreach (Card i in selected)
+            {
+                if (i.Territory.Owner == game.Turn)
+                {
+                    i.Territory.Troops = i.Territory.Troops + 2;
+                    updateTroopCount(mapBox.Controls[$"b{i.Territory.RefName}"] as TerritoryLabel);
+                }
+            }
+            game.Turn.RemoveCard(selected[0]);
+            game.Turn.RemoveCard(selected[1]);
+            game.Turn.RemoveCard(selected[2]);
+            selected.Clear();
+            updateSelectText();
+            updateCards();
         }
 
         private void cardDoubleClick(object sender, EventArgs e)
@@ -476,8 +485,60 @@ namespace Risk
                 defender.Troops = defender.Troops - defendLose;
                 if (defender.Troops < 1)
                 {
+                    Player l = defender.Owner;
+                    defender.Owner.LoseTerritory(defender);
                     defender.Owner = game.Turn;
+                    game.Turn.GainTerritory(defender);
                     defender.Troops = 0;
+                    if (l.TerritoriesCount == 0)
+                    {
+                        game.EliminatePlayer(l);
+                        updateCards();
+                        updatePlayerText();
+                        changeInfoText();
+                        playersBox.Controls.Remove(playersBox.Controls[$"{l.Name.Replace(" ", "")}Label"]);
+                        MessageBox.Show($"{l.Name} has been eliminated.",  "Player Eliminated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (game.Players.Count == 1)
+                        {
+                            MessageBox.Show($"{game.Turn.Name} has won!.", "Game Ended", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            game.ResetGame(map);
+                            twoplayerb.Visible = true;
+                            threeplayerb.Visible = true;
+                            fourplayerb.Visible = true;
+                            fiveplayerb.Visible = true;
+                            mapBox.Visible = false;
+                            cardsList.Visible = false;
+                            playersBox.Visible = false;
+                            selectedLabel.Visible = false;
+                            infoBox.Visible = false;
+                            HoverText.Visible = false;
+                            turnText.Visible = false;
+                            bonusText.Visible = false;
+                            diceText.Visible = false;
+                            selectedT.Visible = false;
+                            turnHelpButton.Visible = false;
+                            cardsHelpButton.Visible = false;
+                            defendOne.Visible = false;
+                            defendTwo.Visible = false;
+                            attackOne.Visible = false;
+                            attackTwo.Visible = false;
+                            attackThree.Visible = false;
+                            endButton.Visible = false;
+                            moveBox.Visible = false;
+                            endButton.Enabled = false;
+                            bonusText.Text = "Card Bonus - " + game.CardBonus;
+                            HoverText.Text = "";
+                            disableDice();
+                            foreach (Control i in mapBox.Controls)
+                            {
+                                if (i.Name[0] == 'b')
+                                {
+                                    updateTroopCount(i as TerritoryLabel);
+                                }
+                            }
+                            return;
+                        }
+                    }
                     game.TurnPart = "TakeOver";
                     moveBox.Enabled = true;
                     endButton.Enabled = true;
@@ -532,7 +593,11 @@ namespace Risk
             }
             else if (game.TurnPart == "Move")
             {
-                if (getsCard == true) game.GiveCard(game.Turn);
+                if (getsCard == true)
+                {
+                    game.GiveCard(game.Turn);
+                    getsCard = false;
+                }
                 game.AdvanceTurn(map);
                 updateTSelect();
                 updateTurnText();
@@ -543,11 +608,6 @@ namespace Risk
                 endButton.Enabled = false;
                 moving = false;
             }
-        }
-
-        private void cockroach(object sender, EventArgs e)
-        {
-            Jim.BackgroundImage = Properties.Resources.American_Roach_Top_V;
         }
 
         private void playersButtonCommon()
