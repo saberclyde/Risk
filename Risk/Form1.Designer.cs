@@ -29,6 +29,7 @@ namespace Risk
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.HoverText = new System.Windows.Forms.Label();
             this.twoplayerb = new System.Windows.Forms.Button();
             this.bonusText = new System.Windows.Forms.Label();
@@ -51,7 +52,7 @@ namespace Risk
             this.selectedT = new System.Windows.Forms.Label();
             this.diceText = new System.Windows.Forms.Label();
             this.fiveplayerb = new System.Windows.Forms.Button();
-            this.mapBox = new System.Windows.Forms.GroupBox();
+            this.mapBox = new System.Windows.Forms.Panel();
             this.bAlberta = new Risk.TerritoryLabel();
             this.bCalifornia = new Risk.TerritoryLabel();
             this.bMexico = new Risk.TerritoryLabel();
@@ -94,8 +95,11 @@ namespace Risk
             this.bPrussia = new Risk.TerritoryLabel();
             this.bRussia = new Risk.TerritoryLabel();
             this.bScandinavia = new Risk.TerritoryLabel();
+            this.titlePic = new System.Windows.Forms.PictureBox();
+            this.sixplayerb = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.moveBox)).BeginInit();
             this.mapBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.titlePic)).BeginInit();
             this.SuspendLayout();
             // 
             // HoverText
@@ -355,6 +359,7 @@ namespace Risk
             // 
             // mapBox
             // 
+            this.mapBox.BackColor = System.Drawing.Color.Transparent;
             this.mapBox.BackgroundImage = global::Risk.Properties.Resources.Risk_game_board;
             this.mapBox.Controls.Add(this.bAlberta);
             this.mapBox.Controls.Add(this.bCalifornia);
@@ -402,7 +407,6 @@ namespace Risk
             this.mapBox.Name = "mapBox";
             this.mapBox.Size = new System.Drawing.Size(720, 405);
             this.mapBox.TabIndex = 59;
-            this.mapBox.TabStop = false;
             // 
             // bAlberta
             // 
@@ -1141,12 +1145,33 @@ namespace Risk
             this.bScandinavia.DoubleClick += new System.EventHandler(this.territoryDoubleClick);
             this.bScandinavia.MouseEnter += new System.EventHandler(this.hover);
             // 
+            // titlePic
+            // 
+            this.titlePic.BackgroundImage = global::Risk.Properties.Resources.title_screen_picture;
+            this.titlePic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.titlePic.Location = new System.Drawing.Point(260, 0);
+            this.titlePic.Name = "titlePic";
+            this.titlePic.Size = new System.Drawing.Size(683, 488);
+            this.titlePic.TabIndex = 73;
+            this.titlePic.TabStop = false;
+            // 
+            // sixplayerb
+            // 
+            this.sixplayerb.Location = new System.Drawing.Point(329, 12);
+            this.sixplayerb.Name = "sixplayerb";
+            this.sixplayerb.Size = new System.Drawing.Size(75, 23);
+            this.sixplayerb.TabIndex = 74;
+            this.sixplayerb.Text = "6 Players";
+            this.sixplayerb.UseVisualStyleBackColor = true;
+            this.sixplayerb.Click += new System.EventHandler(this.sixplayerb_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(940, 486);
+            this.Controls.Add(this.sixplayerb);
             this.Controls.Add(this.fiveplayerb);
             this.Controls.Add(this.diceText);
             this.Controls.Add(this.selectedT);
@@ -1159,7 +1184,6 @@ namespace Risk
             this.Controls.Add(this.attackTwo);
             this.Controls.Add(this.attackOne);
             this.Controls.Add(this.selectedLabel);
-            this.Controls.Add(this.playersBox);
             this.Controls.Add(this.cardsList);
             this.Controls.Add(this.cardsHelpButton);
             this.Controls.Add(this.infoBox);
@@ -1170,11 +1194,15 @@ namespace Risk
             this.Controls.Add(this.twoplayerb);
             this.Controls.Add(this.HoverText);
             this.Controls.Add(this.mapBox);
+            this.Controls.Add(this.titlePic);
+            this.Controls.Add(this.playersBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Risk";
             ((System.ComponentModel.ISupportInitialize)(this.moveBox)).EndInit();
             this.mapBox.ResumeLayout(false);
             this.mapBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.titlePic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1191,7 +1219,7 @@ namespace Risk
         private System.Windows.Forms.Button cardsHelpButton;
         private System.Windows.Forms.FlowLayoutPanel cardsList;
         private System.Windows.Forms.FlowLayoutPanel playersBox;
-        private System.Windows.Forms.GroupBox mapBox;
+        private System.Windows.Forms.Panel mapBox;
         private System.Windows.Forms.Label selectedLabel;
         private TerritoryLabel bAlberta;
         private TerritoryLabel bCalifornia;
@@ -1246,6 +1274,8 @@ namespace Risk
         private System.Windows.Forms.Label selectedT;
         private System.Windows.Forms.Label diceText;
         private System.Windows.Forms.Button fiveplayerb;
+        private System.Windows.Forms.PictureBox titlePic;
+        private System.Windows.Forms.Button sixplayerb;
     }
 }
 

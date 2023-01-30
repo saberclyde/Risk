@@ -66,6 +66,7 @@ namespace Risk
             threeplayerb.Visible = false;
             fourplayerb.Visible = false;
             fiveplayerb.Visible = false;
+            sixplayerb.Visible = false;
             HoverText.Visible = true;
             bonusText.Visible = true;
             turnText.Visible = true;
@@ -84,6 +85,7 @@ namespace Risk
             endButton.Visible = true;
             turnHelpButton.Visible = true;
             selectedT.Visible = true;
+            titlePic.Visible = false;
         }
 
         private void hover(object sender, EventArgs e)
@@ -124,11 +126,25 @@ namespace Risk
 
         private void turnHelpButton_Click(object sender, EventArgs e)
         {
-            if (game.State == "Claiming") MessageBox.Show("Starting with a randomly chosen player, each player must claim a territory until there are no more unowned territories left.", "Set-up Tutorial", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            if (game.State == "Remaining") MessageBox.Show("Place the rest of your troops on territories that you own.", "Set-up Tutorial", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            if (game.TurnPart == "Fortify" && game.State == "Main") MessageBox.Show("During the first part of your turn you may turn in sets of cards to gain additional troops to play.\n\n" +
-                "Click on a territory to add troops to it.\n\n" +
-                "You must place all of your troops before you can continue your turn.", "Turn Tutorial", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (game.State == "Claiming") MessageBox.Show("Starting with a randomly chosen player, each player must claim a territory until there are no more unowned territories left.", "Claiming Tutorial", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else if (game.State == "Remaining") MessageBox.Show("Place the rest of your troops on territories that you own.", "Claiming Tutorial", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else if (game.State == "Main")
+            {
+                if (game.TurnPart == "Fortify") MessageBox.Show("During the first part of your turn, you may turn in sets of cards to gain additional troops to play.\n\n" +
+                    "Click on a territory to add troops to it.\n\n" +
+                    "You must place all of your troops before you can continue your turn.", "Fortifying Tutorial", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else if (game.TurnPart == "Attack") MessageBox.Show("Click on a territory you own with more than one troop in it to attack from it.\n\n" +
+                    "Click on an opponents territory to choose to attack it\n\n" +
+                    "You must have 1 more troop in the attacking territory than the number of dice you decide to roll\n\n" +
+                    "If you manage to conquer at least 1 territory during your turn you are awarded with a card.\n\n" +
+                    "If you conquer the rest of a player's territories during your turn you are awarded with all of that player's cards. The game ends when you are the only player remaining." +
+                    "You may skip this part of your turn by simply pressing the end button", "Attacking Tutorial", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else if (game.TurnPart == "Move") MessageBox.Show("Click on a territory to transfer troops to a different territory connected to that territory.\n\n" +
+                    "Specify a number of troops using the input box and then click along a path of your territories to where you wish to move to. Pressing the end button will end your turn and place the troops there.\n\n" +
+                    "You may skip this part of your turn by simply pressing the end button", "Moving Tutorial", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else if (game.TurnPart == "TakeOver") MessageBox.Show("Specify how many troops you wish to move onto this territory.\n\n" +
+                    "You must move a minumum of 1 troop for every attack dice rolled.", "Attacking Tutorial", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void updateTroopCount(TerritoryLabel l)
@@ -506,6 +522,8 @@ namespace Risk
                             threeplayerb.Visible = true;
                             fourplayerb.Visible = true;
                             fiveplayerb.Visible = true;
+                            sixplayerb.Visible = true;
+                            titlePic.Visible = true;
                             mapBox.Visible = false;
                             cardsList.Visible = false;
                             playersBox.Visible = false;
@@ -648,6 +666,12 @@ namespace Risk
         private void fiveplayerb_Click(object sender, EventArgs e)
         {
             game.SetUp(5, map);
+            playersButtonCommon();
+        }
+
+        private void sixplayerb_Click(object sender, EventArgs e)
+        {
+            game.SetUp(6, map);
             playersButtonCommon();
         }
     }
