@@ -407,6 +407,7 @@ namespace Risk
 
         public bool OwnsContinent(Player p, Continent c)
         {
+            // loop through all the territories in a continent and if they are all owned by one player then return true;
             foreach (Territory i in c.Territories)
             {
                 if (i.Owner != p) return false;

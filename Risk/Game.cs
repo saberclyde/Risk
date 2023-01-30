@@ -90,8 +90,10 @@ namespace Risk
 
         private void CreatePlayers(int c)
         {
+            // colours
             List<Color> colours = new List<Color> 
                 {Color.Red, Color.BlueViolet, Color.LightSeaGreen, Color.DarkOrange, Color.Blue, Color.DeepPink, Color.ForestGreen};
+            // create the specified amount of players (c)
             for (int i = 0; i < c; i++)
             {
                 Color co = colours[dice.Next(colours.Count)];
@@ -102,6 +104,7 @@ namespace Risk
 
         private void GenerateDeck(Map m)
         {
+            // generate the card deck
             List<Territory> tl = new List<Territory> { };
             foreach (Territory i in m.Territories) tl.Add(i);
             for (int i = 0; i < 42; i++)
@@ -118,6 +121,7 @@ namespace Risk
         
         public void SetUp(int pc, Map m)
         {
+            // start game
             playercount = pc;
             CreatePlayers(pc);
             Turn = Order();
@@ -138,15 +142,19 @@ namespace Risk
 
         public void ResetGame(Map m)
         {
+            // reset territories
             foreach (Territory i in m.Territories)
             {
                 i.Troops = 0;
                 i.Owner = null;
             }
+            // reset card bonus
             cardbonusindex = 0;
             cardbonus = cardincrement[0];
+            // reset cards
             deck.Clear();
             players.Clear();
+            // reset turns
             turnPart = "Fortify";
             state = "Claiming";
         }
@@ -154,20 +162,23 @@ namespace Risk
         public void AdvanceTurn(Map m)
         {
             turnPart = "Fortify";
+            // advance state if conditions are met
             if (state == "Claiming")
             {
-                if (unowned.Count == 0) state = "Remaining";
+                if (unowned.Count == 0) state = "Remaining"; // advance state only when there's no unowned territories left
             }
             else if (state == "Remaining")
             {
                 foreach (Player i in players)
                 {
                     if (i.TroopCount != 0) break;
-                    if (i == players[playercount - 1] && i.TroopCount == 0) state = "Main";
+                    if (i == players[playercount - 1] && i.TroopCount == 0) state = "Main"; // if all player's have placed all their troops then advance state
                 }
             }
+            // switch player
             if (players.IndexOf(turn) == players.Count - 1) turn = players[0];
             else turn = players[players.IndexOf(turn) + 1];
+            // do they own any continents
             foreach (Player i in players)
             {
                 int x = i.TerritoriesCount / 3;
@@ -180,6 +191,7 @@ namespace Risk
                 if (m.OwnsContinent(i, m.Asia)) i.TroopsPerTurn = i.TroopsPerTurn + 5;
                 if (m.OwnsContinent(i, m.Australia)) i.TroopsPerTurn = i.TroopsPerTurn + 5;
             }
+            // give player their troops
             if (state == "Main") turn.TroopCount = turn.TroopCount + turn.TroopsPerTurn;
         }
 
@@ -193,7 +205,7 @@ namespace Risk
 
         public void EliminatePlayer(Player p)
         {
-            foreach (Card i in p.Cards) turn.AddCard(i);
+            foreach (Card i in p.Cards) turn.AddCard(i); // give the conquerer all of the conquered player's cards
             p.Cards.Clear();
             players.Remove(p);
         }
